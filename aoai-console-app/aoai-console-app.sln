@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aoai-console-app", "aoai-console-app\aoai-console-app.csproj", "{52054207-8883-434E-9223-D0F525876016}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52054207-8883-434E-9223-D0F525876016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52054207-8883-434E-9223-D0F525876016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52054207-8883-434E-9223-D0F525876016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52054207-8883-434E-9223-D0F525876016}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7411D675-3478-4794-B70A-5ED963C53D00}
+	EndGlobalSection
+EndGlobal
