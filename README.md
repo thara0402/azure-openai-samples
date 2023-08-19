@@ -7,3 +7,5 @@
 - [Simple Console App](./semantic-kernel-console-app/README.md)
 ### Azure OpenAI Service On Your Data
 - [Simple Console App](./aoai-on-your-data-console-app/README.md)
+### Function Calling in Azure OpenAI Service
+- [Simple Console App](./aoai-function-calling-console-app/README.md)

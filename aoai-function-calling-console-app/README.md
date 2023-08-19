@@ -1,0 +1,1 @@
+# Function Calling in Azure OpenAI Service サンプルアプリケーション
