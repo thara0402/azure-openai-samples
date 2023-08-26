@@ -9,3 +9,5 @@
 - [Simple Console App](./aoai-on-your-data-console-app/README.md)
 ### Function Calling in Azure OpenAI Service
 - [Simple Console App](./aoai-function-calling-console-app/README.md)
+### Vector Search with Azure Cognitive Search
+- [Simple Console App](./cognitive-vector-search-console-app/README.md)

@@ -1,0 +1,1 @@
+# Azure OpenAI Service と Azure Cognitive Search を使ったベクトル検索サンプルアプリケーション
