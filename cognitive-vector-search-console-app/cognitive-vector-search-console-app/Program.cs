@@ -8,6 +8,8 @@ using Azure.Search.Documents.Models;
 using Azure.Search.Documents;
 using System.Text.Json;
 
+const string SemanticSearchConfigName = "semantic-config"; 
+
 var settings = new ConfigurationBuilder()
     .AddUserSecrets<Program>()
     .Build()
@@ -27,12 +29,14 @@ if (indexChoice == "y")
 Console.WriteLine("");
 
 var inputQuery = "暑い日に食べられている京菓子は？";
+//var inputQuery = "若鮎とはどのような京菓子ですか？";  // for semantic search
 Console.WriteLine($"Query: {inputQuery}\n");
 
 Console.WriteLine("Choose a query approach:");
 Console.WriteLine("1. Vector Search");
 Console.WriteLine("2. Keyword Search");
 Console.WriteLine("3. Hybrid Search");
+Console.WriteLine("4. Semantic Search");
 Console.Write("Enter the number of the desired approach: ");
 var choice = int.Parse(Console.ReadLine() ?? "0");
 Console.WriteLine("");
@@ -47,6 +51,9 @@ switch (choice)
         break;
     case 3:
         await HybridSearchAsync(searchClient, openAIClient, settings.DeploymentOrModelName, inputQuery);
+        break;
+    case 4:
+        await SemanticSearchAsync(searchClient, openAIClient, settings.DeploymentOrModelName, inputQuery);
         break;
     default:
         Console.WriteLine("Invalid choice. Exiting...");
@@ -123,6 +130,70 @@ static async Task HybridSearchAsync(SearchClient searchClient, OpenAIClient open
     Console.WriteLine($"Total Results: {count}");
 }
 
+static async Task SemanticSearchAsync(SearchClient searchClient, OpenAIClient openAIClient, string deploymentOrModelName, string query)
+{
+    try
+    {
+        var queryEmbeddings = await GetEmbeddingsAsync(deploymentOrModelName, query, openAIClient);
+
+        var searchOptions = new SearchOptions
+        {
+            Vectors = { new SearchQueryVector { Value = queryEmbeddings.ToArray(), KNearestNeighborsCount = 3, Fields = { "contentVector" } } },
+            Size = 10,
+            QueryType = SearchQueryType.Semantic,
+            QueryLanguage = QueryLanguage.JaJp,
+            SemanticConfigurationName = SemanticSearchConfigName,
+            QueryCaption = QueryCaptionType.Extractive,
+            QueryAnswer = QueryAnswerType.Extractive,
+            QueryCaptionHighlightEnabled = true,
+            Select = { "title", "content", "category" },
+        };
+
+        SearchResults<SearchDocument> response = await searchClient.SearchAsync<SearchDocument>(query, searchOptions);
+
+        int count = 0;
+        Console.WriteLine("Semantic Search Results:\n");
+
+        Console.WriteLine("Semantic Answer:");
+        foreach (AnswerResult result in response.Answers)
+        {
+            Console.WriteLine($"Answer Highlights: {result.Highlights}");
+            Console.WriteLine($"Answer Text: {result.Text}\n");
+        }
+
+        await foreach (SearchResult<SearchDocument> result in response.GetResultsAsync())
+        {
+            count++;
+            Console.WriteLine($"Title: {result.Document["title"]}");
+            Console.WriteLine($"Score: {result.Score}");
+            Console.WriteLine($"Content: {result.Document["content"]}");
+            Console.WriteLine($"Category: {result.Document["category"]}");
+
+            if (result.Captions != null)
+            {
+                var caption = result.Captions.FirstOrDefault();
+                if (caption != null)
+                {
+                    if (!string.IsNullOrEmpty(caption.Highlights))
+                    {
+                        Console.WriteLine($"Caption Highlights: {caption.Highlights}\n");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Caption Text: {caption.Text}\n");
+                    }
+                }
+            }
+        }
+        Console.WriteLine($"Total Results: {count}");
+    }
+    catch (NullReferenceException)
+    {
+        Console.WriteLine("Total Results: 0");
+    }
+}
+
+
 static async Task UploadDocumentAsync(string deploymentOrModelName, SearchClient searchClient, OpenAIClient openAIClient)
 {
     var json = File.ReadAllText("./kyogashi.json");
@@ -155,6 +226,25 @@ static SearchIndex CreateSearchIndex(string indexName)
             {
                 new HnswVectorSearchAlgorithmConfiguration(vectorSearchConfigName)
             }
+        },
+        SemanticSettings = new SemanticSettings
+        {
+            Configurations =
+            {
+                new SemanticConfiguration(SemanticSearchConfigName,
+                    new PrioritizedFields
+                    {
+                        TitleField = new SemanticField{ FieldName = "title" },
+                        ContentFields =
+                        {
+                            new SemanticField { FieldName = "content" }
+                        },
+                        KeywordFields =
+                        {
+                            new SemanticField { FieldName = "category" }
+                        }
+                    })
+            },
         },
         Fields =
         {
