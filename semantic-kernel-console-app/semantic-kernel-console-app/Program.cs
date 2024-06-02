@@ -7,8 +7,8 @@ var settings = new ConfigurationBuilder()
     .Build()
     .GetSection(nameof(AzureOpenAISettings)).Get<AzureOpenAISettings>() ?? throw new NullReferenceException();
 
-var builder = new KernelBuilder();
-builder.WithAzureTextCompletionService(settings.DeploymentName, settings.Endpoint, settings.ApiKey);
+var builder = Kernel.CreateBuilder();
+builder.AddAzureOpenAIChatCompletion(settings.DeploymentName, settings.Endpoint, settings.ApiKey);
 var kernel = builder.Build();
 
 // Running prompts with input parameters
@@ -16,20 +16,32 @@ Console.WriteLine("Running prompts with input parameters...");
 var summarizePrompt = @"{{$input}}
 
 One line TLDR with the fewest words.";
-var summarize = kernel.CreateSemanticFunction(summarizePrompt);
+var summarize = kernel.CreateFunctionFromPrompt(summarizePrompt);
 
 string text = @"
-We rounded off the Premier League season with an emphatic win over Wolves, the highlight of which saw Granit Xhaka net his first brace for the club.
-The Swiss midfielder took just 13 minutes of the first half to achieve the feat, with Bukayo Saka adding an excellent third before half-time to mark the week in which he pledged his future in the club in style.
-We kept up the pressure in the second half and Gabriel Jesus added a fourth with a header just before the hour mark, and Jakub Kiwior bagged his first in red and white to complete the scoring, as well as a memorable campaign that has brought Champions League football back to the Emirates Stadium.";
+We fell just short in our hopes of winning the Premier League title but Kai Havertz’s late goal ensured we ended a season to remember on a high by beating Everton.
+Despite having nothing to play for, the Toffees proved to be tricky opponents and took the lead through Idrissa Gueye’s deflected free-kick, but we instantly replied when Takehiro Tomiyasu found the bottom corner.
+We kept pressing for the goal that would give us any hope of the title and it came with a minute left through the German striker, but Manchester City’s 3-1 win against West Ham meant that our result was immaterial as they collected a fourth-straight league title.
+They finished just two points ahead of ourselves despite us hitting record hauls for wins and goals in the competition, and amassing 89 points - just one short of the Invincibles’ record 20 years ago.";
 
-Console.WriteLine(await summarize.InvokeAsync(text));
+var summarizeResult = await kernel.InvokeAsync(summarize, new() { ["input"] = text });
+Console.WriteLine(summarizeResult);
 
-// Prompt chaining
-Console.WriteLine("Prompt chaining...");
+//// Prompt chaining
+//Console.WriteLine("Prompt chaining...");
+//var translationPrompt = @"{{$input}}
+
+//Translate the following English text into Japanese.";
+//var translator = kernel.CreateFunctionFromPrompt(translationPrompt);
+
+//Console.WriteLine(await kernel.RunAsync(text, summarize, translator));
+
+// Translate
+Console.WriteLine("Translate...");
 var translationPrompt = @"{{$input}}
 
 Translate the following English text into Japanese.";
-var translator = kernel.CreateSemanticFunction(translationPrompt);
+var translator = kernel.CreateFunctionFromPrompt(translationPrompt);
 
-Console.WriteLine(await kernel.RunAsync(text, summarize, translator));
+var translationResult = await kernel.InvokeAsync(translator, new() { ["input"] = summarizeResult });
+Console.WriteLine(translationResult);
