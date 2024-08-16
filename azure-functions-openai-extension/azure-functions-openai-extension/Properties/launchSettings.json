@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "azure_functions_openai_extension": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7074",
+      "launchBrowser": false
+    }
+  }
+}

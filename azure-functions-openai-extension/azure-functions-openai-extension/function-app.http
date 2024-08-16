@@ -1,0 +1,6 @@
+@function_app_HostAddress = http://localhost:7074
+
+GET {{function_app_HostAddress}}/api/completion/Where is Microsoft located?
+Accept: application/json
+
+###
