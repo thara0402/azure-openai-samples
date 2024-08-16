@@ -4,3 +4,22 @@ GET {{function_app_HostAddress}}/api/completion/Where is Microsoft located?
 Accept: application/json
 
 ###
+
+PUT {{function_app_HostAddress}}/api/chat/1 HTTP/1.1
+content-type: application/json
+
+###
+
+POST {{function_app_HostAddress}}/api/chat/1 HTTP/1.1
+content-type: application/json
+
+{
+  "userMessage": "Where is Seattle?"
+}
+
+###
+
+GET {{function_app_HostAddress}}/api/chat/1?TimestampUtc=2024-08-16T00:00:00
+Accept: application/json
+
+###
