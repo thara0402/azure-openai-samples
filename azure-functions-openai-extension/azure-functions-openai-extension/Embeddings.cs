@@ -60,10 +60,12 @@ namespace azure_functions_openai_extension
         }
 
         [Function(nameof(SemanticSearch))]
-        public static IActionResult SemanticSearch(
+        public IActionResult SemanticSearch(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "embeddings/search")] SemanticSearchRequest unused,
             [SemanticSearchInput("AISearchEndpoint", "openai-index", Query = "{Prompt}", ChatModel = "%CHAT_MODEL_DEPLOYMENT_NAME%", EmbeddingsModel = "%EMBEDDING_MODEL_DEPLOYMENT_NAME%")] SemanticSearchContext result)
         {
+            _logger.LogInformation("Semantic search input binding function processed a request.");
+
             return new ContentResult { Content = result.Response, ContentType = "text/plain" };
         }
 
