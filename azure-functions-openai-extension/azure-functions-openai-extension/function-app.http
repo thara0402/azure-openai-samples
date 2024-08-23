@@ -1,6 +1,6 @@
 @function_app_HostAddress = http://localhost:7074
 
-GET {{function_app_HostAddress}}/api/completion/Where is Microsoft located?
+GET {{function_app_HostAddress}}/api/text/Where is Microsoft located?
 Accept: application/json
 
 ###
@@ -21,5 +21,30 @@ content-type: application/json
 
 GET {{function_app_HostAddress}}/api/chat/1?TimestampUtc=2024-08-16T00:00:00
 Accept: application/json
+
+###
+
+POST {{function_app_HostAddress}}/api/embeddings/generate HTTP/1.1
+content-type: application/json
+
+{
+  "rawText": "暑い日に食べられている京菓子は？"
+}
+
+###
+
+POST {{function_app_HostAddress}}/api/embeddings/ingest HTTP/1.1
+content-type: application/json
+
+< ./Data/request-body04.json
+
+###
+
+POST {{function_app_HostAddress}}/api/embeddings/search HTTP/1.1
+content-type: application/json
+
+{
+  "prompt": "暑い日に食べられている京菓子は？"
+}
 
 ###

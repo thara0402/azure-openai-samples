@@ -7,19 +7,19 @@ using Microsoft.Extensions.Logging;
 
 namespace azure_functions_openai_extension
 {
-    public class SearchText
+    public class Text
     {
-        private readonly ILogger<SearchText> _logger;
+        private readonly ILogger<Text> _logger;
 
-        public SearchText(ILogger<SearchText> logger)
+        public Text(ILogger<Text> logger)
         {
             _logger = logger;
         }
 
-        [Function(nameof(SearchText))]
-        public IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "completion/{text}")] HttpRequest req,
-            [TextCompletionInput("{text}", Model = "%CHAT_MODEL_DEPLOYMENT_NAME%")] TextCompletionResponse response)
+        [Function(nameof(GenerateText))]
+        public IActionResult GenerateText(
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "text/{prompt}")] HttpRequest req,
+            [TextCompletionInput("{prompt}", Model = "%CHAT_MODEL_DEPLOYMENT_NAME%")] TextCompletionResponse response)
         {
             _logger.LogInformation("Text completion input binding function processed a request.");
 
