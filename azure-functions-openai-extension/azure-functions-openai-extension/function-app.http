@@ -48,3 +48,27 @@ content-type: application/json
 }
 
 ###
+POST {{function_app_HostAddress}}/api/chat/1 HTTP/1.1
+content-type: application/json
+
+{
+  "userMessage": "父に電話するのを忘れないように"
+}
+
+###
+POST {{function_app_HostAddress}}/api/chat/1 HTTP/1.1
+content-type: application/json
+
+{
+  "userMessage": "それと、ゴミ出しも"
+}
+
+###
+POST {{function_app_HostAddress}}/api/chat/1 HTTP/1.1
+content-type: application/json
+
+{
+  "userMessage": "今日は何をすればいい？"
+}
+
+###
