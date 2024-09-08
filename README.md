@@ -12,3 +12,5 @@
 - [Simple Console App](./aoai-function-calling-console-app/README.md)
 ### Vector Search with Azure Cognitive Search
 - [Simple Console App](./cognitive-vector-search-console-app/README.md)
+### Azure OpenAI extension for Azure Functions
+- [Simple Function App](./azure-functions-openai-extension/README.md)
