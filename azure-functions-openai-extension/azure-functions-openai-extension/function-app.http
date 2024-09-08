@@ -1,29 +1,36 @@
 @function_app_HostAddress = http://localhost:7074
 
-GET {{function_app_HostAddress}}/api/text/Where is Microsoft located?
+### Text completion input binding
+POST {{function_app_HostAddress}}/api/text HTTP/1.1
 Accept: application/json
 
-###
+{
+  "prompt": "
+  Kai Havertz got the scoring started when he nodded home a Bukayo Saka cross after 25 minutes, 
+  but the visitors would cause us some nervy moments either side of the break with David Raya needing to be at his best to keep us in front.
+  However Saka added a goal to his afternoon’s work when he blasted home at the near post to ensure we recorded a seventh-straight win against the Molineux side, 
+  and see the superb form from the final few months of last season flow into the new campaign.
 
+  One line TLDR with the fewest words."
+}
+
+### Assistant create output binding
 PUT {{function_app_HostAddress}}/api/chat/1 HTTP/1.1
 content-type: application/json
 
-###
-
+### Assistant post input binding
 POST {{function_app_HostAddress}}/api/chat/1 HTTP/1.1
 content-type: application/json
 
 {
-  "userMessage": "Where is Seattle?"
+  "userMessage": "京都のお勧めの観光地はどこですか?"
 }
 
-###
-
+### Assistant query input binding
 GET {{function_app_HostAddress}}/api/chat/1?TimestampUtc=2024-08-16T00:00:00
 Accept: application/json
 
-###
-
+### Embeddings input binding
 POST {{function_app_HostAddress}}/api/embeddings/generate HTTP/1.1
 content-type: application/json
 
@@ -31,15 +38,13 @@ content-type: application/json
   "rawText": "暑い日に食べられている京菓子は？"
 }
 
-###
-
+### Embeddings store output binding
 POST {{function_app_HostAddress}}/api/embeddings/ingest HTTP/1.1
 content-type: application/json
 
-< ./Data/request-body04.json
+< ./Data/request-body01.json
 
-###
-
+### Semantic search input binding
 POST {{function_app_HostAddress}}/api/embeddings/search HTTP/1.1
 content-type: application/json
 
@@ -47,23 +52,23 @@ content-type: application/json
   "prompt": "暑い日に食べられている京菓子は？"
 }
 
-###
+### Assistant trigger
 POST {{function_app_HostAddress}}/api/chat/1 HTTP/1.1
 content-type: application/json
 
 {
-  "userMessage": "父に電話するのを忘れないように"
+  "userMessage": "出張の新幹線を予約するのを忘れないように"
 }
 
-###
+### Assistant trigger
 POST {{function_app_HostAddress}}/api/chat/1 HTTP/1.1
 content-type: application/json
 
 {
-  "userMessage": "それと、ゴミ出しも"
+  "userMessage": "それと、ホテルの予約も"
 }
 
-###
+### Assistant trigger
 POST {{function_app_HostAddress}}/api/chat/1 HTTP/1.1
 content-type: application/json
 

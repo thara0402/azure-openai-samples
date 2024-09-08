@@ -18,7 +18,7 @@ namespace azure_functions_openai_extension
 
         [Function(nameof(GenerateText))]
         public IActionResult GenerateText(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "text/{prompt}")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "text")] HttpRequest req,
             [TextCompletionInput("{prompt}", Model = "%CHAT_MODEL_DEPLOYMENT_NAME%")] TextCompletionResponse response)
         {
             _logger.LogInformation("Text completion input binding function processed a request.");
