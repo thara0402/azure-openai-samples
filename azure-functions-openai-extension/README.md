@@ -8,7 +8,7 @@ local.settings.json
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
-    "AZURE_OPENAI_ENDPOINT": "https://xxx.openai.azure.com/",
+    "AZURE_OPENAI_ENDPOINT": "https://xxx-xxx-eastus2.cognitiveservices.azure.com/",
     "AZURE_OPENAI_KEY": "xxx",
     "CHAT_MODEL_DEPLOYMENT_NAME": "gpt-4o",
     "EMBEDDING_MODEL_DEPLOYMENT_NAME": "text-embedding-ada-002",
