@@ -23,5 +23,6 @@ secret.json
     "DocumentIntelligenceEndpoint": "https://xxx.cognitiveservices.azure.com/",
     "DocumentIntelligenceApiKey": "xxx"
   }
-}```
+}
+```
 
