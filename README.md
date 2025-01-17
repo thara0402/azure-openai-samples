@@ -14,5 +14,5 @@
 - [Simple Console App](./cognitive-vector-search-console-app/README.md)
 ### Azure OpenAI extension for Azure Functions
 - [Simple Function App](./azure-functions-openai-extension/README.md)
-### Multi Agent for Azure DurableFunctions
+### Multi Agent for Azure Durable Functions
 - [Durable Function App](./azure-durable-functions-multi-agent/README.md)
