@@ -1,4 +1,5 @@
 using Azure.AI.OpenAI;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,8 @@ builder.ConfigureFunctionsWebApplication();
 builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly());
 
 builder.Services
+    .AddApplicationInsightsTelemetryWorkerService()
+    .ConfigureFunctionsApplicationInsights()
     .Configure<OrchestratorWorkerSettings>(builder.Configuration.GetSection("Function"))
     .AddAzureClients(clientBuilder =>
     {
@@ -32,12 +35,6 @@ builder.Services
             return new AzureOpenAIClient(new Uri(endpoint), new ApiKeyCredential(apiKey), options);
         });
     });
-
-// Application Insights isn't enabled by default. See https://aka.ms/AAt8mw4.
-// builder.Services
-//     .AddApplicationInsightsTelemetryWorkerService()
-//     .ConfigureFunctionsApplicationInsights();
-
 
 builder.Services.Configure<JsonSerializerOptions>(jsonSerializerOptions =>
 {
