@@ -1,0 +1,48 @@
+@function_app_HostAddress = http://localhost:7142
+
+### SyncStarter
+POST {{function_app_HostAddress}}/api/invoke/sync HTTP/1.1
+Content-Type: application/json
+
+{
+	"messages": [
+		{
+			"role": "user",
+			"content": "おすすめの旅行先を見つけて欲しい"
+		},
+		{
+			"role": "assistant",
+			"content": "旅行先についての希望の条件を教えてください。例えば、ビーチがある場所、歴史的な観光地が多い場所、自然が豊かな場所など、ご希望に応じておすすめの旅行先を提案します。"
+		},
+		{
+			"role": "user",
+			"content": "歴史的な観光地が多い場所かな〜"
+		}
+	],
+	"requireAdditionalInfo": false
+}
+
+
+### AsyncStarter
+POST {{function_app_HostAddress}}/api/invoke/async HTTP/1.1
+Content-Type: application/json
+
+{
+	"messages": [
+		{
+			"role": "user",
+			"content": "おすすめの旅行先を見つけて欲しい"
+		},
+		{
+			"role": "assistant",
+			"content": "旅行先についての希望の条件を教えてください。例えば、ビーチがある場所、歴史的な観光地が多い場所、自然が豊かな場所など、ご希望に応じておすすめの旅行先を提案します。"
+		},
+		{
+			"role": "user",
+			"content": "歴史的な観光地が多い場所かな〜"
+		}
+	],
+	"requireAdditionalInfo": false
+}
+
+###
