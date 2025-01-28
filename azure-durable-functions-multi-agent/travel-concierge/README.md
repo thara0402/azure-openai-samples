@@ -8,11 +8,7 @@ local.settings.json
   "IsEncrypted": false,
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
-    "StorageBindingConnection": "xxx",
-    "AZURE_OPENAI_ENDPOINT": "https://xxx-xxx-eastus2.cognitiveservices.azure.com/",
-    "AZURE_OPENAI_KEY": "xxx",
-    "CHAT_MODEL_DEPLOYMENT_NAME": "gpt-4o"
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
   }
 }
 ```
@@ -21,8 +17,9 @@ secret.json
 ```json
 {
   "Function": {
-    "DocumentIntelligenceEndpoint": "https://xxx.cognitiveservices.azure.com/",
-    "DocumentIntelligenceApiKey": "xxx"
+    "AzureOpenAIEndpoint": "https://xxx-xxx-eastus2.cognitiveservices.azure.com/",
+    "AzureOpenAIApiKey": "xxx",
+    "ModelDeploymentName": "gpt-4o"
   }
 }
 ```
