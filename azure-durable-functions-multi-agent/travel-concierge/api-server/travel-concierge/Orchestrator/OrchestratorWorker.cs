@@ -24,7 +24,7 @@ namespace travel_concierge.Orchestrator
             var agentsToRun = await context.CallGetAgentsToRunAsync(prompt, options);
             if (!agentsToRun.IsAgentCall)
             {
-                logger.LogInformation("No agent call happened");
+                logger.LogInformation("No agent call happened.");
                 if (prompt.RequireAdditionalInfo)
                 {
                     throw new NotImplementedException();
@@ -33,7 +33,7 @@ namespace travel_concierge.Orchestrator
             }
 
             // Agent Call
-            logger.LogInformation("Agent call happened");
+            logger.LogInformation("Agent call happened.");
             var parallelAgentCall = new List<Task<string>>();
             foreach (var agentCall in agentsToRun.AgentCalls)
             {

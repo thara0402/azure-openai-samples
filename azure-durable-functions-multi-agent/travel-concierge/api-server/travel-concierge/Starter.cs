@@ -19,7 +19,7 @@ namespace travel_concierge
             [DurableClient] DurableTaskClient client,
             FunctionContext executionContext)
         {
-            var logger = executionContext.GetLogger("SyncStarter");
+            var logger = executionContext.GetLogger(nameof(SyncStarter));
 
             if (prompt == null)
             {
@@ -43,7 +43,7 @@ namespace travel_concierge
             [DurableClient] DurableTaskClient client,
             FunctionContext executionContext)
         {
-            var logger = executionContext.GetLogger("AsyncStarter");
+            var logger = executionContext.GetLogger(nameof(AsyncStarter));
 
             if (prompt == null)
             {
