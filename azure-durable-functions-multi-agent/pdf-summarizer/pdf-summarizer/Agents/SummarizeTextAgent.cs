@@ -6,11 +6,9 @@ using pdf_summarizer.Models;
 
 namespace pdf_summarizer.Agents
 {
-    internal class SummarizeTextAgent : AgentBase
+    internal class SummarizeTextAgent(IOptions<MySettings> optionsAccessor)
     {
-        public SummarizeTextAgent(IOptions<MySettings> optionsAccessor) : base(optionsAccessor)
-        {
-        }
+        protected readonly MySettings _settings = optionsAccessor.Value;
 
         [Function(nameof(SummarizeTextAgent))]
         public string RunActivity(

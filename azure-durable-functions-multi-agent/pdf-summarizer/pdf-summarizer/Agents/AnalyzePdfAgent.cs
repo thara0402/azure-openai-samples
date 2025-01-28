@@ -8,11 +8,10 @@ using System.Text;
 
 namespace pdf_summarizer.Agents
 {
-    internal class AnalyzePdfAgent : AgentBase
+    internal class AnalyzePdfAgent(DocumentAnalysisClient documentAnalysisClient, IOptions<MySettings> optionsAccessor)
     {
-        public AnalyzePdfAgent(IOptions<MySettings> optionsAccessor) : base(optionsAccessor)
-        {
-        }
+        protected readonly MySettings _settings = optionsAccessor.Value;
+        protected readonly DocumentAnalysisClient _documentAnalysisClient = documentAnalysisClient;
 
         [Function(nameof(AnalyzePdfAgent))]
         public async Task<string> RunActivityAsync([ActivityTrigger] string blobUri, FunctionContext executionContext)
@@ -20,11 +19,7 @@ namespace pdf_summarizer.Agents
             var logger = executionContext.GetLogger("AnalyzePdf");
             logger.LogInformation("Analyzing Pdf from {blobUri}.", blobUri);
 
-            var client = new DocumentAnalysisClient(
-                new Uri(_settings.DocumentIntelligenceEndpoint),
-                new AzureKeyCredential(_settings.DocumentIntelligenceApiKey));
-
-            var operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-read", new Uri(blobUri));
+            var operation = await _documentAnalysisClient.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-read", new Uri(blobUri));
 
             var result = new StringBuilder();
             foreach (var page in operation.Value.Pages)

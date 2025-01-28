@@ -5,11 +5,9 @@ using pdf_summarizer.Models;
 
 namespace pdf_summarizer.Agents
 {
-    internal class UploadDocumentAgent : AgentBase
+    internal class UploadDocumentAgent(IOptions<MySettings> optionsAccessor)
     {
-        public UploadDocumentAgent(IOptions<MySettings> optionsAccessor) : base(optionsAccessor)
-        {
-        }
+        protected readonly MySettings _settings = optionsAccessor.Value;
 
         [Function(nameof(UploadDocumentAgent))]
         [BlobOutput("samples-workitems-output/{FileName}.txt", Connection = "StorageBindingConnection")]
