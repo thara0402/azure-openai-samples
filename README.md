@@ -16,3 +16,5 @@
 - [Simple Function App](./azure-functions-openai-extension/README.md)
 ### Multi Agent for Azure Durable Functions
 - [Durable Function App](./azure-durable-functions-multi-agent/README.md)
+### Multi Agent for Durable Task Scheduler
+- [Durable Task Scheduler App](./azure-durable-task-scheduler-multi-agent/README.md)
