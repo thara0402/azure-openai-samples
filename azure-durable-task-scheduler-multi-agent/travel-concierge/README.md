@@ -1,7 +1,7 @@
 # 旅行コンシェルジュ
 
 ## API Server
-### 前準備
+### Preparation
 local.settings.json
 ```json
 {
@@ -24,6 +24,11 @@ secret.json
     "ModelDeploymentName": "gpt-4o"
   }
 }
+```
+
+### Set up durable task scheduler emulator
+```shell-session
+$ docker run --rm -it -p 8080:8080 -p 8082:8082 mcr.microsoft.com/dts/dts-emulator:v0.0.5
 ```
 
 ## Chat Client
