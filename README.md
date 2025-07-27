@@ -18,3 +18,5 @@
 - [Durable Function App](./azure-durable-functions-multi-agent/README.md)
 ### Multi Agent for Durable Task Scheduler
 - [Durable Task Scheduler App](./azure-durable-task-scheduler-multi-agent/README.md)
+### Multi Agent for Azure Functions MCP extension
+- [Azure Functions MCP Extension](./azure-functions-mcp-multi-agent/README.md)
