@@ -22,7 +22,6 @@ builder.Services
     .AddApplicationInsightsTelemetryWorkerService()
     .ConfigureFunctionsApplicationInsights()
     .AddTransient<IOrchestratorWorker, OrchestratorWorker>()
-//    .AddTransient<OrchestratorWorker>()
     .Configure<TravelConciergeSettings>(builder.Configuration.GetSection("Function"))
     .AddChatClient(_ => BuildChatClient(builder.Configuration));
 

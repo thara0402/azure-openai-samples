@@ -50,7 +50,7 @@ namespace travel_concierge.Orchestrator
                 Name = "Travel Concierge MCP Server",
                 AdditionalHeaders = new Dictionary<string, string>
                 {
-                    {"x-functions-key", _settings.MCPServerApiKey}
+                    {"x-functions-key", _settings.MCPExtensionSystemKey}
                 }
             };
             var transport = new SseClientTransport(options);
