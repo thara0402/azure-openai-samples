@@ -47,7 +47,7 @@ secret.json
     "AzureOpenAIApiKey": "xxx",
     "ModelDeploymentName": "gpt-4o",
     "MCPServerEndpoint": "http://localhost:xxxx/runtime/webhooks/mcp/sse",
-    "MCPServerApiKey": "xxx"
+    "MCPExtensionSystemKey": "xxx"
   }
 }
 ```
