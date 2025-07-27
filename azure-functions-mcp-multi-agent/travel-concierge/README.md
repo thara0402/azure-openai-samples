@@ -8,22 +8,22 @@ Case of synchronous endpoint:
 sequenceDiagram
     participant Client
     participant Starter
-    participant OrchestratorWorker
-    participant GetAgentsToRun
-    participant AgentActivity
-    participant SynthesizeAgentCallResults
+    participant OrchestratorWorker (MCP Client)
+    participant LLM
+    participant Agents (MCP Server)
 
-    Client->>Starter: Web API request
-    Starter->>OrchestratorWorker: Start
-    OrchestratorWorker ->> GetAgentsToRun: Decide agent to call
-    GetAgentsToRun ->> OrchestratorWorker: Agent that should call
-    OrchestratorWorker -->> Starter: If no agent to call, return plain text
-    OrchestratorWorker ->> AgentActivity: Invoke(Multiple & Parallel)
-    AgentActivity ->> OrchestratorWorker: Result
-    OrchestratorWorker ->> SynthesizeAgentCallResults: Synthesize result & generate answer
-    SynthesizeAgentCallResults ->> OrchestratorWorker: Synthesized answer
-    OrchestratorWorker ->> Starter: Answer
-    Starter ->> Client: Web API respons
+    Client->>Starter: Sends a Web API request
+    Starter->>OrchestratorWorker (MCP Client): Initiates the process
+    OrchestratorWorker (MCP Client) ->> Agents (MCP Server): Requests a list of available tools from the server
+    Agents (MCP Server) ->> OrchestratorWorker (MCP Client): Returns the list of available tools
+    OrchestratorWorker (MCP Client) ->> LLM: Sends chat messages
+    LLM ->> OrchestratorWorker (MCP Client): Returns the response
+    OrchestratorWorker (MCP Client) ->> Agents (MCP Server): Calls tools
+    Agents (MCP Server) ->> OrchestratorWorker (MCP Client): Returns the results of the tool calls
+    OrchestratorWorker (MCP Client) ->> LLM: Sends tool results for final completion
+    LLM ->> OrchestratorWorker (MCP Client): Returns the final user-facing message
+    OrchestratorWorker (MCP Client) ->> Starter: Sends the answer
+    Starter ->> Client: Returns the Web API response
 ```
 
 ## API Server
