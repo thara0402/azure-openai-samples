@@ -46,7 +46,7 @@ secret.json
     "AzureOpenAIEndpoint": "https://xxx-xxx-eastus2.cognitiveservices.azure.com/",
     "AzureOpenAIApiKey": "xxx",
     "ModelDeploymentName": "gpt-4o",
-    "MCPServerEndpoint": "http://localhost:xxxx/runtime/webhooks/mcp",
+    "MCPServerEndpoint": "http://localhost:xxxx/runtime/webhooks/mcp/sse",
     "MCPExtensionSystemKey": "xxx"
   }
 }

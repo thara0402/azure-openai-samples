@@ -10,8 +10,8 @@ namespace travel_concierge.Agents
 
         [Function(nameof(GetHotel))]
         public string GetHotel(
-            [McpToolTrigger(nameof(GetHotel), "指定された場所のホテルを取得します。")] ToolInvocationContext context,
-            [McpToolProperty(nameof(location), "場所の名前。例: ボストン, 東京、フランス", true)] string location)
+            [McpToolTrigger("get_hotel", "指定された場所のホテルを取得します。")] ToolInvocationContext context,
+            [McpToolProperty("location", "string", "場所の名前。例: ボストン, 東京、フランス")] string location)
         {
             // This is sample code. Replace this with your own logic.
             var result = $"""

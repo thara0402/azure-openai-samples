@@ -11,8 +11,8 @@ namespace travel_concierge.Agents
 
         [Function(nameof(GetClimate))]
         public string GetClimate(
-            [McpToolTrigger(nameof(GetClimate), "指定された場所の気候を取得します。")] ToolInvocationContext context,
-            [McpToolProperty(nameof(location), "場所の名前。例: ボストン, 東京、フランス", true)] string location)
+            [McpToolTrigger("get_climate", "指定された場所の気候を取得します。")] ToolInvocationContext context,
+            [McpToolProperty("location", "string", "場所の名前。例: ボストン, 東京、フランス")] string location)
         {
             // This is sample code. Replace this with your own logic.
             var result = $"""

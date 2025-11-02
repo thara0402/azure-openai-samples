@@ -41,19 +41,20 @@ namespace travel_concierge.Orchestrator
             };
         }
 
-        private async Task<McpClient> CreateMcpClientAsync()
+        private async Task<IMcpClient> CreateMcpClientAsync()
         {
-            IClientTransport clientTransport = new HttpClientTransport(new()
+            var options = new SseClientTransportOptions
             {
                 Endpoint = new Uri(_settings.MCPServerEndpoint),
-                TransportMode = HttpTransportMode.StreamableHttp,
+                TransportMode = HttpTransportMode.Sse,
                 Name = "Travel Concierge MCP Server",
                 AdditionalHeaders = new Dictionary<string, string>
                 {
                     {"x-functions-key", _settings.MCPExtensionSystemKey}
                 }
-            });
-            return await McpClient.CreateAsync(clientTransport!);
+            };
+            var transport = new SseClientTransport(options);
+            return await McpClientFactory.CreateAsync(transport);
         }
 
         private List<string> ExtractFunctionCallNames(IList<ChatMessage> messages)

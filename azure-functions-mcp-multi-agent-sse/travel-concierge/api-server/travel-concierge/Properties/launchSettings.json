@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "travel_concierge": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7142",
+      "launchBrowser": false
+    }
+  }
+}

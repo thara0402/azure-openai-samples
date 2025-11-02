@@ -10,8 +10,8 @@ namespace travel_concierge.Agents
 
         [Function(nameof(GetDestinationSuggest))]
         public string GetDestinationSuggest(
-            [McpToolTrigger(nameof(GetDestinationSuggest), "希望の行き先に求める条件を自然言語で与えると、おすすめの旅行先を提案します。")] ToolInvocationContext context,
-            [McpToolProperty(nameof(searchTerm), "行き先に求める希望の条件", true)] string searchTerm)
+            [McpToolTrigger("get_destination_suggest", "希望の行き先に求める条件を自然言語で与えると、おすすめの旅行先を提案します。")] ToolInvocationContext context,
+            [McpToolProperty("searchTerm", "string", "行き先に求める希望の条件")] string searchTerm)
         {
             // This is sample code. Replace this with your own logic.
             var result = $"""

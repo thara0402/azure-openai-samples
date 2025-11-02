@@ -16,6 +16,8 @@ builder.ConfigureFunctionsWebApplication();
 
 builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly());
 
+builder.EnableMcpToolMetadata();
+
 builder.Services
     .AddApplicationInsightsTelemetryWorkerService()
     .ConfigureFunctionsApplicationInsights()
