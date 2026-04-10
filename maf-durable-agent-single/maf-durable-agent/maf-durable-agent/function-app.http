@@ -1,0 +1,16 @@
+@function_app_HostAddress = http://localhost:7005
+
+### Prompt the agent
+POST {{function_app_HostAddress}}/api/agents/Translator/run HTTP/1.1
+Content-Type: text/plain
+
+こんにちは、世界！
+
+### Prompt the agent with Json payload
+POST {{function_app_HostAddress}}/api/agents/Translator/run HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+	"message": "こんにちは、世界！"
+}
