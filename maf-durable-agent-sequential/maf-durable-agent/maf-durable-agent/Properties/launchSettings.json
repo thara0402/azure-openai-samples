@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "maf_durable_agent": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7005",
+      "launchBrowser": false
+    }
+  }
+}

@@ -1,0 +1,9 @@
+@function_app_HostAddress = http://localhost:7005
+
+### Prompt the agent
+POST {{function_app_HostAddress}}/api/SequentialAgent_HttpStart HTTP/1.1
+Content-Type: text/plain
+
+We rounded off the Premier League season with an emphatic win over Wolves, the highlight of which saw Granit Xhaka net his first brace for the club.
+The Swiss midfielder took just 13 minutes of the first half to achieve the feat, with Bukayo Saka adding an excellent third before half-time to mark the week in which he pledged his future in the club in style.
+We kept up the pressure in the second half and Gabriel Jesus added a fourth with a header just before the hour mark, and Jakub Kiwior bagged his first in red and white to complete the scoring, as well as a memorable campaign that has brought Champions League football back to the Emirates Stadium.
