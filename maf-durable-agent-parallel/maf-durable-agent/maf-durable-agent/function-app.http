@@ -1,0 +1,7 @@
+@function_app_HostAddress = http://localhost:7005
+
+### Prompt the agent
+POST {{function_app_HostAddress}}/api/ParallelAgent_HttpStart HTTP/1.1
+Content-Type: text/plain
+
+こんにちは
