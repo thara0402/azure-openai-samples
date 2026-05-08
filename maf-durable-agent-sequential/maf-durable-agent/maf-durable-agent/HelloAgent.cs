@@ -1,49 +1,56 @@
+using Microsoft.Agents.AI.DurableTask;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.DurableTask;
 using Microsoft.DurableTask.Client;
 using Microsoft.Extensions.Logging;
+using System.ComponentModel;
 
 namespace maf_durable_agent;
 
-public static class Function1
+public static class HelloAgent
 {
-    [Function(nameof(Function1))]
-    public static async Task<List<string>> RunOrchestrator(
-        [OrchestrationTrigger] TaskOrchestrationContext context)
+    public sealed record TextResponse(string Text);
+
+    [Description("Greets the given name and returns a hello message.")]
+    public static string SayHello([Description("The name to greet")] string name)
     {
-        ILogger logger = context.CreateReplaySafeLogger(nameof(Function1));
-        logger.LogInformation("Saying hello.");
-        var outputs = new List<string>();
-
-        // Replace name and input with values relevant for your Durable Functions Activity
-        outputs.Add(await context.CallActivityAsync<string>(nameof(SayHello), "Tokyo"));
-        outputs.Add(await context.CallActivityAsync<string>(nameof(SayHello), "Seattle"));
-        outputs.Add(await context.CallActivityAsync<string>(nameof(SayHello), "London"));
-
-        // returns ["Hello Tokyo!", "Hello Seattle!", "Hello London!"]
-        return outputs;
-    }
-
-    [Function(nameof(SayHello))]
-    public static string SayHello([ActivityTrigger] string name, FunctionContext executionContext)
-    {
-        ILogger logger = executionContext.GetLogger("SayHello");
-        logger.LogInformation("Saying hello to {name}.", name);
         return $"Hello {name}!";
     }
 
-    [Function("Function1_HttpStart")]
+    [Function(nameof(HelloAgent))]
+    public static async Task<List<string>> RunOrchestrator(
+        [OrchestrationTrigger] TaskOrchestrationContext context)
+    {
+        ILogger logger = context.CreateReplaySafeLogger(nameof(HelloAgent));
+        logger.LogInformation("Saying hello.");
+        var outputs = new List<string>();
+
+        var helloAgent = context.GetAgent("HelloAgent");
+
+        var tokyoResponse = await helloAgent.RunAsync<TextResponse>(message: "Tokyo");
+        outputs.Add(tokyoResponse.Result.Text);
+
+        var seattleResponse = await helloAgent.RunAsync<TextResponse>(message: "Seattle");
+        outputs.Add(seattleResponse.Result.Text);
+
+        var londonResponse = await helloAgent.RunAsync<TextResponse>(message: "London");
+        outputs.Add(londonResponse.Result.Text);
+
+        return outputs;
+    }
+
+    [Function("HelloAgent_HttpStart")]
     public static async Task<HttpResponseData> HttpStart(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
         [DurableClient] DurableTaskClient client,
         FunctionContext executionContext)
     {
-        ILogger logger = executionContext.GetLogger("Function1_HttpStart");
+        ILogger logger = executionContext.GetLogger("HelloAgent_HttpStart");
 
         // Function input comes from the request content.
         string instanceId = await client.ScheduleNewOrchestrationInstanceAsync(
-            nameof(Function1));
+            nameof(HelloAgent));
 
         logger.LogInformation("Started orchestration with ID = '{instanceId}'.", instanceId);
 

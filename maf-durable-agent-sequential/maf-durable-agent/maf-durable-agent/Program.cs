@@ -1,8 +1,10 @@
 using Azure;
 using Azure.AI.OpenAI;
+using maf_durable_agent;
 using Microsoft.Agents.AI.Hosting.AzureFunctions;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Builder;
+using Microsoft.Extensions.AI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpenAI.Chat;
@@ -27,16 +29,23 @@ const string TranslatorName = "TranslatorAgent";
 const string TranslatorInstructions = "Translate the following English text into Japanese.";
 var translatorAgent = aoaiClient.GetChatClient(deploymentName).AsAIAgent(TranslatorInstructions, TranslatorName);
 
+const string HelloName = "HelloAgent";
+const string HelloInstructions = "Use the SayHello tool to greet the name provided by the user.";
+var helloAgent = aoaiClient.GetChatClient(deploymentName).AsAIAgent(
+    HelloInstructions,
+    HelloName,
+    tools: [AIFunctionFactory.Create(HelloAgent.SayHello)]);
+
 var builder = FunctionsApplication.CreateBuilder(args);
 
 builder.ConfigureFunctionsWebApplication();
 
 // Configure the function app to host the AI agent.
-// This will automatically generate HTTP API endpoints for the agent.
 builder.ConfigureDurableAgents(options =>
     {
-        options.AddAIAgent(summaryAgent);
-        options.AddAIAgent(translatorAgent);
+        options.AddAIAgent(summaryAgent, enableHttpTrigger: false, enableMcpToolTrigger: false);
+        options.AddAIAgent(translatorAgent, enableHttpTrigger: false, enableMcpToolTrigger: false);
+        options.AddAIAgent(helloAgent, enableHttpTrigger: false, enableMcpToolTrigger: false);
     });
 
 builder.Services
