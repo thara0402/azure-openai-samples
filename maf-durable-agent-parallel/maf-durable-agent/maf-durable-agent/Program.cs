@@ -32,11 +32,10 @@ var builder = FunctionsApplication.CreateBuilder(args);
 builder.ConfigureFunctionsWebApplication();
 
 // Configure the function app to host the AI agent.
-// This will automatically generate HTTP API endpoints for the agent.
 builder.ConfigureDurableAgents(options =>
     {
-        options.AddAIAgent(englishTranslatorAgent);
-        options.AddAIAgent(italianTranslatorAgent);
+        options.AddAIAgent(englishTranslatorAgent, enableHttpTrigger: false, enableMcpToolTrigger: false);
+        options.AddAIAgent(italianTranslatorAgent, enableHttpTrigger: false, enableMcpToolTrigger: false);
     });
 
 builder.Services
