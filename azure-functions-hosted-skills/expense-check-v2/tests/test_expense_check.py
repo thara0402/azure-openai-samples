@@ -64,7 +64,7 @@ class ExpenseCheckIntegrationTests(unittest.TestCase):
                 self.assertIn("領収書", reasons)
                 self.assertRegex(reasons, r"未添付|添付されていない|添付がない|添付なし")
                 self.assertRegex(reasons, r"上限")
-                self.assertRegex(reasons, r"未定|ない|なし|未設定|定められていません|定められていない")
+                self.assertRegex(reasons, r"未定|ない|なし|未設定|規定がありません|定められていません|定められていない")
 
 
 if __name__ == "__main__":
