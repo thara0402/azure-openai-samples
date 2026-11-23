@@ -1,0 +1,6 @@
+name: japanese-english-translation
+services:
+  api:
+    project: ./src
+    language: python
+    host: function
