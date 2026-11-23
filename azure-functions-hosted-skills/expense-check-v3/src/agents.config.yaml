@@ -1,0 +1,4 @@
+# Global configuration for all agents in this function app.
+
+model: $FOUNDRY_MODEL
+timeout: 900
