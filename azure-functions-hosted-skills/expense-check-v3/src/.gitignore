@@ -1,0 +1,4 @@
+src/local.settings.json
+src/.foundry-token.json
+.intelligent-function-app-studio/
+.azure-functions-hosted-skills/
