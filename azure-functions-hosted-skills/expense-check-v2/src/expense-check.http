@@ -1,0 +1,46 @@
+### Local
+POST http://localhost:7071/api/expense-check
+Content-Type: application/json; charset=utf-8
+
+{
+  "expenses": [
+    {
+      "date": "2026-11-20",
+      "category": "meal",
+      "description": "昼食",
+      "amount": 2400,
+      "receipt_attached": true
+    },
+    {
+      "date": "2026-11-21",
+      "category": "meal",
+      "description": "夕食",
+      "amount": 3800,
+      "receipt_attached": false
+    }
+  ]
+}
+
+### Azure
+POST {{$dotenv AZURE_FUNCTION_URL}}/api/expense-check
+Content-Type: application/json; charset=utf-8
+x-functions-key: {{$dotenv AZURE_FUNCTION_KEY}}
+
+{
+  "expenses": [
+    {
+      "date": "2026-11-20",
+      "category": "meal",
+      "description": "昼食",
+      "amount": 2400,
+      "receipt_attached": true
+    },
+    {
+      "date": "2026-11-21",
+      "category": "meal",
+      "description": "夕食",
+      "amount": 3800,
+      "receipt_attached": false
+    }
+  ]
+}

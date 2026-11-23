@@ -1,0 +1,8 @@
+.azure-functions-hosted-skills/
+.venv/
+__pycache__/
+local.settings.json
+src/local.settings.json
+src/.env
+src/.foundry-token.json
+.intelligent-function-app-studio/
