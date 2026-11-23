@@ -1,0 +1,6 @@
+name: expense-check
+services:
+  api:
+    project: ./src
+    language: python
+    host: function
